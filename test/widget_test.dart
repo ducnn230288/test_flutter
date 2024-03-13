@@ -32,32 +32,27 @@ void main() {
 
     testWidgets('Should have a title', (WidgetTester tester) async {
       await tester.pumpWidget(const MyApp());
-      Finder finder = find.text("Login 1");
-      expect(finder, findsOneWidget);
+      expect(find.text("Login 1"), findsOneWidget);
     });
 
     testWidgets('Should have one text field form to collect user email id', (WidgetTester tester) async {
       await tester.pumpWidget(const MyApp());
-      Finder finder = find.byKey(const ValueKey("email_id"));
-      expect(finder, findsOneWidget);
+      expect(find.byKey(const ValueKey("email_id")), findsOneWidget);
     });
 
     testWidgets('Should have one text field form to collect Password', (WidgetTester tester) async {
       await tester.pumpWidget(const MyApp());
-      Finder finder = find.byKey(const ValueKey("password"));
-      expect(finder, findsOneWidget);
+      expect(find.byKey(const ValueKey("password")), findsOneWidget);
     });
 
     testWidgets('Should have one login button', (WidgetTester tester) async {
       await tester.pumpWidget(const MyApp());
-      Finder finder = find.byType(ElevatedButton);
-      expect(finder, findsOneWidget);
+      expect(find.byType(ElevatedButton), findsOneWidget);
     });
 
     testWidgets('Should show Required Fields error message if user email id & password is empty', (WidgetTester tester) async {
       await tester.pumpWidget(const MyApp());
-      Finder loginButton = find.byType(ElevatedButton);
-      await tester.tap(loginButton);
+      await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
       Finder errorTexts = find.text("Required Field");
 
@@ -66,16 +61,12 @@ void main() {
 
     testWidgets('Should submit form when user email id & password is valid', (WidgetTester tester) async {
       await tester.pumpWidget(const MyApp());
-      Finder userNameTextField = find.byKey(const ValueKey("email_id"));
-      Finder passwordTextField = find.byKey(const ValueKey("password"));
-
-      await tester.enterText(userNameTextField, 'rich@gmail.com');
-      await tester.enterText(passwordTextField, 'password');
-
-      Finder loginButton = find.byType(ElevatedButton);
-      await tester.tap(loginButton);
+      await tester.enterText(find.byKey(const ValueKey("email_id")), 'rich@gmail.com');
+      await tester.enterText(find.byKey(const ValueKey("password")), 'password');
+      await tester.tap(find.byType(ElevatedButton));
       await tester.pumpAndSettle();
       Finder errorTexts = find.text("Required Field");
+
       expect(errorTexts, findsNothing);
     });
   });
